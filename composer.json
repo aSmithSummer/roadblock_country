@@ -8,7 +8,7 @@
     ],
     "license": "BSD-3-Clause",
     "require": {
-        "asmithsummer/roadblock": "^0.0.*"
+        "asmithsummer/roadblock": "^1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
