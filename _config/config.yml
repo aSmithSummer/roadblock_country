@@ -1,0 +1,9 @@
+---
+Name: roadblock_country_extensions
+---
+Roadblock\Model\RequestLog:
+  extensions:
+    - RoadblockMember\Extensions\RequestLogCountryExtension
+Roadblock\Model\RoadblockRule:
+  extensions:
+    - RoadblockMember\Extensions\RoadblockRuleCountryExtension
