@@ -2,7 +2,6 @@
 
 namespace RoadblockCountry\Model;
 
-use App\Helpers\GroupNames;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\Security;
