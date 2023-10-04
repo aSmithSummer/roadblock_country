@@ -46,6 +46,7 @@ class RoadblockRuleCountryExtension extends DataExtension
                 return true;
             }
         }
+        return false;
     }
 
 }
