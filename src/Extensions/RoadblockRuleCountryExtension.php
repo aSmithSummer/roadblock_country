@@ -20,6 +20,22 @@ class RoadblockRuleCountryExtension extends DataExtension
         'CountryOffset' => 'Int',
     ];
 
+    public function updateExportFields(&$fields): bool
+    {
+        $extraFields = [
+            'Country' => 'Country',
+            'CountryAllowed' => 'CountryAllowed',
+            'CountryNumber' => 'CountryNumber',
+            'CountryOffset' => 'CountryOffset',
+        ];
+
+        foreach($extraFields as $k => $v) {
+            $fields[$k] = $v;
+        }
+
+        return true;
+    }
+
     public function updateEvaluateSession(SessionLog $sessionLog, RequestLog $request, RoadblockRule $rule): bool
     {
         if ($rule->Country) {
