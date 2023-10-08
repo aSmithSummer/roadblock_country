@@ -1,6 +1,6 @@
 <?php
 
-namespace RoadblockMember\Extensions;
+namespace RoadblockCountry\Extensions;
 
 use RoadblockCountry\Model\CountryIPRange;
 use SilverStripe\ORM\DataExtension;

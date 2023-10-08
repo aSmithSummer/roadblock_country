@@ -1,6 +1,5 @@
 en:
-  ASmithSummer\Roadblock\Model\Roadblock:
-    NOTIFY_PARTIAL_SUBJECT: 'Notification of new partial IP block'
-    NOTIFY_PARTIAL_BODY: 'A new roadblock has been created for the IP address, name (if known): {IPAddress}, {Name}'
-    NOTIFY_BLOCKED_SUBJECT: 'Notification of IP block'
-    NOTIFY_BLOCKED_BODY: 'A roadblock has been enforced for the IP address, name (if known): {IPAddress}, {Name}'
+  RoadblockCountry\Model\CountryIPRange:
+    FROM_VALIDATIOM: 'From ip address not found.'
+    TO_VALIDATIOM: 'To ip address not found.'
+    ORDER_VALIDATIOM: 'From ip address must be greater than to ip address.'
