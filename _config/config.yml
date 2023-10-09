@@ -3,7 +3,12 @@ Name: roadblock_country_extensions
 ---
 Roadblock\Model\RequestLog:
   extensions:
-    - RoadblockMember\Extensions\RequestLogCountryExtension
+    - RoadblockCountry\Extensions\RequestLogCountryExtension
 Roadblock\Model\RoadblockRule:
   extensions:
-    - RoadblockMember\Extensions\RoadblockRuleCountryExtension
+    - RoadblockCountry\Extensions\RoadblockRuleCountryExtension
+---
+Name: roadblock_country_settings
+---
+RoadblockCountry\Model\CountryIPRange:
+  default_country_name: 'Outside New Zealand'
