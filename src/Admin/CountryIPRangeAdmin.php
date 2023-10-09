@@ -23,10 +23,6 @@ class CountryIPRangeAdmin extends ModelAdmin
 
     private static string $menu_title = 'Country IP Ranges';
 
-    private static array $model_importers = [
-        CountryIPRange::class => CountryIPRangeCsvBulkLoader::class,
-    ];
-
     private static array $allowed_actions = [
         'ImportForm',
     ];
