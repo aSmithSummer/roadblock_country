@@ -1,6 +1,6 @@
 <?php
 
-namespace RoadblockMember\Extensions;
+namespace RoadblockCountry\Extensions;
 
 use Roadblock\Model\RequestLog;
 use Roadblock\Model\RoadblockRule;
