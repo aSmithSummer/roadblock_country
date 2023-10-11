@@ -36,7 +36,7 @@ class RoadblockRuleCountryExtension extends DataExtension
         return true;
     }
 
-    public function updateEvaluateSession(SessionLog $sessionLog, RequestLog $request, RoadblockRule $rule): bool
+    public function updateEvaluateSession(SessionLog $sessionLog, RequestLog $request, RoadblockRule $rule, $global = false): bool
     {
         if ($rule->Country) {
             $time = DBDatetime::create()
@@ -45,10 +45,14 @@ class RoadblockRuleCountryExtension extends DataExtension
                 ->format('y-MM-dd HH:mm:ss');
 
             $filter = [
-                'SessionLogID' => $sessionLog->ID,
                 'Created:GreaterThanOrEqual' => $time,
-
             ];
+
+            if ($global) {
+                $filter['IPAddress'] = $request->IPAddress;
+            } else {
+                $filter['SessionLogID'] = $sessionLog->ID;
+            }
 
             if ($rule->CountryAllowed === 'Allowed') {
                 $filter['Country'] = $rule->Country;
