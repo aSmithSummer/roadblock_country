@@ -5,6 +5,7 @@ namespace RoadblockCountry\Extensions;
 use Roadblock\Model\RequestLog;
 use Roadblock\Model\RoadblockRule;
 use Roadblock\Model\SessionLog;
+use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBDatetime;
 
@@ -19,6 +20,21 @@ class RoadblockRuleCountryExtension extends DataExtension
         'CountryNumber' => 'Int',
         'CountryOffset' => 'Int',
     ];
+
+    public function updateCMSFields(FieldList $fields): void
+    {
+        $order = [
+            'Country' => 'ExcludePermission',
+            'CountryAllowed' => 'Country',
+            'CountryNumber' => 'CountryAllowed',
+            'CountryOffset' => 'CountryNumber',
+        ];
+
+        foreach ($order as $fieldName => $after) {
+            $field = $fields->dataFieldByName($fieldName);
+            $fields->insertAfter($after, $field);
+        }
+    }
 
     public function updateExportFields(&$fields): bool
     {
