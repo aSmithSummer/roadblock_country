@@ -7,6 +7,9 @@ Roadblock\Model\RequestLog:
 Roadblock\Model\RoadblockRule:
   extensions:
     - RoadblockCountry\Extensions\RoadblockRuleCountryExtension
+Roadblock\Model\RoadblockRuleInspector:
+  extensions:
+    - RoadblockCountry\Extensions\RoadblockRuleInspectorCountryExtension
 ---
 Name: roadblock_country_settings
 ---
