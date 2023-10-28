@@ -1,9 +1,9 @@
 <?php
 
-namespace RoadblockCountry\Admin;
+namespace aSmithSummer\RoadblockCountry\Admin;
 
-use RoadblockCountry\BulkLoader\CountryIPRangeCsvBulkLoader;
-use RoadblockCountry\Model\CountryIPRange;
+use aSmithSummer\RoadblockCountry\BulkLoader\CountryIPRangeCsvBulkLoader;
+use aSmithSummer\RoadblockCountry\Model\CountryIPRange;
 use SilverStripe\Admin\ModelAdmin;
 
 /**

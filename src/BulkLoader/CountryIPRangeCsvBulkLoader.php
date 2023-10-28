@@ -1,6 +1,6 @@
 <?php
 
-namespace RoadblockCountry\BulkLoader;
+namespace aSmithSummer\RoadblockCountry\BulkLoader;
 
 use SilverStripe\Dev\CsvBulkLoader;
 
