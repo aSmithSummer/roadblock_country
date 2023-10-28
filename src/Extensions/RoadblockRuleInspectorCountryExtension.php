@@ -1,10 +1,10 @@
 <?php
 
-namespace RoadblockCountry\Extensions;
+namespace aSmithSummer\RoadblockCountry\Extensions;
 
-use Roadblock\Model\RequestLog;
-use Roadblock\Model\RoadblockRule;
-use Roadblock\Model\SessionLog;
+use aSmithSummer\Roadblock\Model\RequestLog;
+use aSmithSummer\Roadblock\Model\RoadblockRule;
+use aSmithSummer\Roadblock\Model\SessionLog;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBDatetime;
