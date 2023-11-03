@@ -2,15 +2,12 @@
 
 namespace aSmithSummer\RoadblockCountry\Extensions;
 
-use aSmithSummer\Roadblock\Model\RequestLog;
-use aSmithSummer\Roadblock\Model\RoadblockRule;
-use aSmithSummer\Roadblock\Model\SessionLog;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
-use SilverStripe\ORM\FieldType\DBDatetime;
 
 class RoadblockRuleInspectorCountryExtension extends DataExtension
 {
+
     private static array $db = [
         'Country' => 'Varchar(250)',
     ];
@@ -30,9 +27,26 @@ class RoadblockRuleInspectorCountryExtension extends DataExtension
     public function updateSetRequestLogData(array &$requestLogData): void
     {
         $country = $this->owner->Country;
-        if ($country) {
-            $requestLogData['Country'] = $country;
+
+        if (!$country) {
+            return;
         }
+
+        $requestLogData['Country'] = $country;
+    }
+
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
+    public function updateExportFields(&$fields): bool
+    {
+        $extraFields = [
+            'Country' => 'Country',
+        ];
+
+        foreach ($extraFields as $k => $v) {
+            $fields[$k] = $v;
+        }
+
+        return true;
     }
 
 }

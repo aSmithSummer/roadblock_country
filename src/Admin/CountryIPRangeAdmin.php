@@ -2,7 +2,6 @@
 
 namespace aSmithSummer\RoadblockCountry\Admin;
 
-use aSmithSummer\RoadblockCountry\BulkLoader\CountryIPRangeCsvBulkLoader;
 use aSmithSummer\RoadblockCountry\Model\CountryIPRange;
 use SilverStripe\Admin\ModelAdmin;
 
@@ -12,8 +11,6 @@ use SilverStripe\Admin\ModelAdmin;
  */
 class CountryIPRangeAdmin extends ModelAdmin
 {
-
-    protected bool $allow_import_overwrite = true;
 
     private static array $managed_models = [
         CountryIPRange::class,

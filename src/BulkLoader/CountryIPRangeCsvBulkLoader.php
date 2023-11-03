@@ -13,7 +13,7 @@ class CountryIPRangeCsvBulkLoader extends CsvBulkLoader
     /**
      * @var array
      */
-    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint,SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
     public $columnMap = [
         'From IP Number' => 'FromIPNumber',
         'From IP Address' => 'FromIPAddress',

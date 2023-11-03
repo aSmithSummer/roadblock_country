@@ -4,7 +4,6 @@ namespace aSmithSummer\RoadblockCountry\Model;
 
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
-use SilverStripe\Security\Security;
 
 /**
  * Class CountryIPRange
@@ -20,7 +19,7 @@ class CountryIPRange extends DataObject
 {
 
     private static string $table_name = 'CountryIPRange';
-
+    // phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
     private static array $db = [
         'FromIPNumber' => 'BigInt',
         'FromIPAddress' => 'Varchar(15)',
@@ -29,7 +28,7 @@ class CountryIPRange extends DataObject
         'CountryCode' => 'Varchar(8)',
         'CountryName' => 'Varchar(255)',
     ];
-
+    // phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
     private static array $summary_fields = [
         'FromIPAddress' => 'From',
         'ToIPAddress' => 'To',
@@ -38,37 +37,38 @@ class CountryIPRange extends DataObject
 
     private static string $default_sort = 'FromIPNumber';
 
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint
     public function validate()
     {
         $result = parent::validate();
 
-        if($this->FromIPAddress) {
+        if ($this->FromIPAddress) {
             if (!((int) ip2long($this->FromIPAddress) >= 0)) {
-                $result->addError(_t(__CLASS__ . '.FROM_VALIDATIOM',"From ip address not found."));
+                $result->addError(_t(self::class . '.FROM_VALIDATIOM', 'From ip address not found.'));
             }
         } else {
-            $result->addError(_t(__CLASS__ . '.FROM_VALIDATIOM',"From ip address not found."));
+            $result->addError(_t(self::class . '.FROM_VALIDATIOM', 'From ip address not found.'));
         }
 
-        if($this->ToIPAddress) {
+        if ($this->ToIPAddress) {
             if (!((int) ip2long($this->ToIPAddress) >= 0)) {
-                $result->addError(_t(__CLASS__ . '.TO_VALIDATIOM',"To ip address not found."));
+                $result->addError(_t(self::class . '.TO_VALIDATIOM', 'To ip address not found.'));
             }
         } else {
-            $result->addError(_t(__CLASS__ . '.TO_VALIDATIOM',"To ip address not found."));
+            $result->addError(_t(self::class . '.TO_VALIDATIOM', 'To ip address not found.'));
         }
 
-        if((int) ip2long($this->ToIPAddress) <= (int) ip2long($this->FromIPAddress)) {
+        if ((int) ip2long($this->ToIPAddress) <= (int) ip2long($this->FromIPAddress)) {
             $result->addError(_t(
-                __CLASS__ . '.ORDER_VALIDATIOM',
-                "From ip address must be greater than to ip address."
+                self::class . '.ORDER_VALIDATIOM',
+                'From ip address must be greater than to ip address.'
             ));
         }
 
         return $result;
     }
 
-    public function onBeforeWrite()
+    public function onBeforeWrite(): void
     {
         parent::onBeforeWrite();
 
@@ -76,12 +76,14 @@ class CountryIPRange extends DataObject
             $this->FromIPNumber = (int) ip2long($this->FromIPAddress);
         }
 
-        if (!$this->ToIPNumber) {
-            $this->ToIPNumber = (int) ip2long($this->ToIPAddress);
+        if ($this->ToIPNumber) {
+            return;
         }
+
+        $this->ToIPNumber = (int) ip2long($this->ToIPAddress);
     }
 
-    public function onAfterWrite()
+    public function onAfterWrite(): void
     {
         parent::onAfterWrite();
 
@@ -89,10 +91,12 @@ class CountryIPRange extends DataObject
         $records = self::get()
             ->exclude(['ID' => $this->ID])
             ->where(
-                sprintf('(FromIPNumber BETWEEN %1$d AND %2$d) OR (ToIPNumber BETWEEN %1$d AND %2$d) ' .
-                'OR (FromIPNumber < %1$d AND ToIPNumber > %2$d)',
-                $this->FromIPNumber,
-                $this->ToIPNumber)
+                sprintf(
+                    '(FromIPNumber BETWEEN %1$d AND %2$d) OR (ToIPNumber BETWEEN %1$d AND %2$d) ' .
+                    'OR (FromIPNumber < %1$d AND ToIPNumber > %2$d)',
+                    $this->FromIPNumber,
+                    $this->ToIPNumber
+                )
             );
 
         foreach ($records as $record) {
@@ -154,7 +158,8 @@ class CountryIPRange extends DataObject
 
     public function getExportFields(): array
     {
-        $fields =  [
+        // phpcs:ignore SlevomatCodingStandard.Arrays.AlphabeticallySortedByKeys.IncorrectKeyOrder
+        $fields = [
             'Title' => 'Title',
             'FromIPNumber' => 'FromIPNumber',
             'FromIPAddress' => 'FromIPAddress',

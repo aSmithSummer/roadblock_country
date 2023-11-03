@@ -11,6 +11,7 @@ use SilverStripe\ORM\FieldType\DBDatetime;
 
 class RoadblockRuleCountryExtension extends DataExtension
 {
+
     private static array $db = [
         'Country' => 'Varchar(250)',
         'CountryAllowed' => 'Boolean',
@@ -32,7 +33,7 @@ class RoadblockRuleCountryExtension extends DataExtension
             $fields->insertAfter($after, $field);
         }
     }
-
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
     public function updateExportFields(&$fields): bool
     {
         $extraFields = [
@@ -42,15 +43,19 @@ class RoadblockRuleCountryExtension extends DataExtension
             'CountryOffset' => 'CountryOffset',
         ];
 
-        foreach($extraFields as $k => $v) {
+        foreach ($extraFields as $k => $v) {
             $fields[$k] = $v;
         }
 
         return true;
     }
-
-    public function updateEvaluateSession(SessionLog $sessionLog, RequestLog $request, RoadblockRule $rule, $global = false): bool
-    {
+    // phpcs:ignore SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingAnyTypeHint,SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
+    public function updateEvaluateSession(
+        SessionLog $sessionLog,
+        RequestLog $request,
+        RoadblockRule $rule,
+        $global = false
+    ): bool {
         if ($rule->Country) {
             $time = DBDatetime::create()
                 ->modify($sessionLog->LastAccessed)
@@ -73,24 +78,28 @@ class RoadblockRuleCountryExtension extends DataExtension
             }
 
             if ($requests->exists() && $requests->count() <= $rule->CountryNumber) {
-                $rule->addExceptionData(_t(__class__ . 'TEST_COUNTRY',
+                $rule->addExceptionData(_t(
+                    self::class . 'TEST_COUNTRY',
                     'Country exists and count {count} less than or equal to {number} for permission {allowed}',
                     [
                         'allowed' => $rule->CountryAllowed ? 'Allowed' : 'Denied',
                         'count' => $requests->count(),
                         'number' => $rule->CountryNumber,
-                    ]));
+                    ]
+                ));
 
                 return true;
             }
 
-            $rule->addExceptionData(_t(__class__ . 'TEST_COUNTRY_FALSE',
+            $rule->addExceptionData(_t(
+                self::class . 'TEST_COUNTRY_FALSE',
                 'Country does not exist or count {count} is less than number {number} for permission {allowed}',
                 [
                     'allowed' => $rule->CountryAllowed,
                     'count' => $requests ? $requests->count() : 0,
                     'number' => $rule->CountryNumber,
-                ]));
+                ]
+            ));
         }
 
         return false;

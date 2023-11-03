@@ -10,6 +10,7 @@ use SilverStripe\ORM\DataExtension;
  */
 class RequestLogCountryExtension extends DataExtension
 {
+
     private static array $db = [
         'Country' => 'Varchar(50)',
     ];
