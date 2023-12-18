@@ -73,7 +73,7 @@ class RoadblockRuleCountryExtension extends DataExtension
             }
 
             if ($requests->exists() && $requests->count() <= $rule->CountryNumber) {
-                $rule->addExceptionData(_t(__class__ . 'TEST_COUNTRY',
+                $rule->addExceptionData(_t(self::class . '.TEST_COUNTRY',
                     'Country exists and count {count} less than or equal to {number} for permission {allowed}',
                     [
                         'allowed' => $rule->CountryAllowed ? 'Allowed' : 'Denied',
@@ -84,7 +84,7 @@ class RoadblockRuleCountryExtension extends DataExtension
                 return true;
             }
 
-            $rule->addExceptionData(_t(__class__ . 'TEST_COUNTRY_FALSE',
+            $rule->addExceptionData(_t(self::class . '.TEST_COUNTRY_FALSE',
                 'Country does not exist or count {count} is less than number {number} for permission {allowed}',
                 [
                     'allowed' => $rule->CountryAllowed,

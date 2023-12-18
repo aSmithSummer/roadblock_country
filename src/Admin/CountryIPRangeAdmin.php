@@ -23,6 +23,8 @@ class CountryIPRangeAdmin extends ModelAdmin
 
     private static string $menu_title = 'Country IP Ranges';
 
+    private static $menu_icon_class = 'font-icon-globe';
+
     private static array $allowed_actions = [
         'ImportForm',
     ];
