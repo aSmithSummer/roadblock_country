@@ -1,8 +1,8 @@
 <?php
 
-namespace RoadblockCountry\Extensions;
+namespace aSmithSummer\RoadblockCountry\Extensions;
 
-use RoadblockCountry\Model\CountryIPRange;
+use aSmithSummer\RoadblockCountry\Model\CountryIPRange;
 use SilverStripe\ORM\DataExtension;
 
 /**

@@ -1,6 +1,6 @@
 <?php
 
-namespace RoadblockCountry\Model;
+namespace aSmithSummer\RoadblockCountry\Model;
 
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;

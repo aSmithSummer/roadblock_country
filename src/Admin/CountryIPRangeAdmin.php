@@ -1,9 +1,9 @@
 <?php
 
-namespace RoadblockCountry\Admin;
+namespace aSmithSummer\RoadblockCountry\Admin;
 
-use RoadblockCountry\BulkLoader\CountryIPRangeCsvBulkLoader;
-use RoadblockCountry\Model\CountryIPRange;
+use aSmithSummer\RoadblockCountry\BulkLoader\CountryIPRangeCsvBulkLoader;
+use aSmithSummer\RoadblockCountry\Model\CountryIPRange;
 use SilverStripe\Admin\ModelAdmin;
 
 /**
@@ -22,6 +22,8 @@ class CountryIPRangeAdmin extends ModelAdmin
     private static string $url_segment = 'countryipranges';
 
     private static string $menu_title = 'Country IP Ranges';
+
+    private static $menu_icon_class = 'font-icon-globe';
 
     private static array $allowed_actions = [
         'ImportForm',
