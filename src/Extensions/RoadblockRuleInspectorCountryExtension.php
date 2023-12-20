@@ -28,6 +28,19 @@ class RoadblockRuleInspectorCountryExtension extends DataExtension
         }
     }
 
+    public function updateExportFields(&$fields): bool
+    {
+        $extraFields = [
+            'Country' => 'Country',
+        ];
+
+        foreach ($extraFields as $k => $v) {
+            $fields[$k] = $v;
+        }
+
+        return true;
+    }
+
     public function updateSetRequestLogData(array &$requestLogData): void
     {
         $country = CountryIPRange::getCountryForIP($requestLogData['IPAddress']);
