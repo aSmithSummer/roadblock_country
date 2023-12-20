@@ -5,6 +5,7 @@ namespace aSmithSummer\RoadblockCountry\Extensions;
 use aSmithSummer\Roadblock\Model\RequestLog;
 use aSmithSummer\Roadblock\Model\RoadblockRule;
 use aSmithSummer\Roadblock\Model\SessionLog;
+use aSmithSummer\RoadblockCountry\Model\CountryIPRange;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBDatetime;
@@ -29,7 +30,7 @@ class RoadblockRuleInspectorCountryExtension extends DataExtension
 
     public function updateSetRequestLogData(array &$requestLogData): void
     {
-        $country = $this->owner->Country;
+        $country = CountryIPRange::getCountryForIP($requestLogData['IPAddress']);
         if ($country) {
             $requestLogData['Country'] = $country;
         }

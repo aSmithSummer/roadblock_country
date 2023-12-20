@@ -6,6 +6,7 @@ use aSmithSummer\Roadblock\Model\RequestLog;
 use aSmithSummer\Roadblock\Model\RoadblockRule;
 use aSmithSummer\Roadblock\Model\SessionLog;
 use SilverStripe\Forms\FieldList;
+use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBDatetime;
 
@@ -49,6 +50,28 @@ class RoadblockRuleCountryExtension extends DataExtension
         return true;
     }
 
+    public function getDescriptionNice(&$text): void
+    {
+        if ($this->owner->Country) {
+            $allowed = 'is';
+
+            if ($this->owner->CountryAllowed) {
+                $allowed = 'is not';
+            }
+
+            $text .= _t(
+                self::class . '.DESCRIPTION',
+                '<p>The country {Country} {Allowed} in {Number} requests in the last {Offset} seconds</p>'
+                ,[
+                    'Country' => $this->owner->Country,
+                    'Allowed' => $allowed,
+                    'Number' => $this->owner->CountryNumber,
+                    'Offset' => $this->owner->CountryOffset,
+                ]
+            );
+        }
+    }
+
     public function updateEvaluateSession(SessionLog $sessionLog, RequestLog $request, RoadblockRule $rule, $global = false): bool
     {
         if ($rule->Country) {
@@ -85,9 +108,9 @@ class RoadblockRuleCountryExtension extends DataExtension
             }
 
             $rule->addExceptionData(_t(self::class . '.TEST_COUNTRY_FALSE',
-                'Country does not exist or count {count} is less than number {number} for permission {allowed}',
+                'Country does not exist or count {count} is greater than number {number} for permission {allowed}',
                 [
-                    'allowed' => $rule->CountryAllowed,
+                    'allowed' => $rule->CountryAllowed ? 'Allowed' : 'Denied',
                     'count' => $requests ? $requests->count() : 0,
                     'number' => $rule->CountryNumber,
                 ]));
