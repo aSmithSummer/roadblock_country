@@ -4,12 +4,12 @@ Name: roadblock_country_extensions
 aSmithSummer\Roadblock\Model\RequestLog:
   extensions:
     - aSmithSummer\RoadblockCountry\Extensions\RequestLogCountryExtension
-aSmithSummer\Roadblock\Model\RoadblockRule:
+aSmithSummer\Roadblock\Model\Rule:
   extensions:
-    - aSmithSummer\RoadblockCountry\Extensions\RoadblockRuleCountryExtension
-aSmithSummer\Roadblock\Model\RoadblockRuleInspector:
+    - aSmithSummer\RoadblockCountry\Extensions\RuleCountryExtension
+aSmithSummer\Roadblock\Model\RuleInspector:
   extensions:
-    - aSmithSummer\RoadblockCountry\Extensions\RoadblockRuleInspectorCountryExtension
+    - aSmithSummer\RoadblockCountry\Extensions\RuleInspectorCountryExtension
 ---
 Name: roadblock_country_settings
 ---
