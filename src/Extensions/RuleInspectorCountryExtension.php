@@ -3,14 +3,14 @@
 namespace aSmithSummer\RoadblockCountry\Extensions;
 
 use aSmithSummer\Roadblock\Model\RequestLog;
-use aSmithSummer\Roadblock\Model\RoadblockRule;
+use aSmithSummer\Roadblock\Model\Rule;
 use aSmithSummer\Roadblock\Model\SessionLog;
 use aSmithSummer\RoadblockCountry\Model\CountryIPRange;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBDatetime;
 
-class RoadblockRuleInspectorCountryExtension extends DataExtension
+class RuleInspectorCountryExtension extends DataExtension
 {
     private static array $db = [
         'Country' => 'Varchar(250)',
@@ -41,7 +41,7 @@ class RoadblockRuleInspectorCountryExtension extends DataExtension
         return true;
     }
 
-    public function updateSetRequestLogData(array &$requestLogData): void
+    public function updatePrepareRequestLog(array &$requestLogData): void
     {
         $country = CountryIPRange::getCountryForIP($requestLogData['IPAddress']);
         if ($country) {

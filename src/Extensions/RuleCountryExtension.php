@@ -3,14 +3,14 @@
 namespace aSmithSummer\RoadblockCountry\Extensions;
 
 use aSmithSummer\Roadblock\Model\RequestLog;
-use aSmithSummer\Roadblock\Model\RoadblockRule;
+use aSmithSummer\Roadblock\Model\Rule;
 use aSmithSummer\Roadblock\Model\SessionLog;
 use SilverStripe\Forms\FieldList;
 use SilverStripe\ORM\ArrayList;
 use SilverStripe\ORM\DataExtension;
 use SilverStripe\ORM\FieldType\DBDatetime;
 
-class RoadblockRuleCountryExtension extends DataExtension
+class RuleCountryExtension extends DataExtension
 {
     private static array $db = [
         'Country' => 'Varchar(250)',
@@ -72,7 +72,7 @@ class RoadblockRuleCountryExtension extends DataExtension
         }
     }
 
-    public function updateEvaluateSession(SessionLog $sessionLog, RequestLog $request, RoadblockRule $rule, $global = false): bool
+    public function updateEvaluateSession(SessionLog $sessionLog, RequestLog $request, Rule $rule, $global = false): bool
     {
         if ($rule->Country) {
             $time = DBDatetime::create()
