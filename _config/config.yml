@@ -4,6 +4,9 @@ Name: roadblock_country_extensions
 aSmithSummer\Roadblock\Model\RequestLog:
   extensions:
     - aSmithSummer\RoadblockCountry\Extensions\RequestLogCountryExtension
+aSmithSummer\Roadblock\Model\SessionLog:
+  extensions:
+    - aSmithSummer\RoadblockCountry\Extensions\SessionLogCountryExtension
 aSmithSummer\Roadblock\Model\Rule:
   extensions:
     - aSmithSummer\RoadblockCountry\Extensions\RuleCountryExtension
