@@ -89,8 +89,8 @@ class CountryIPRange extends DataObject
         $records = self::get()
             ->exclude(['ID' => $this->ID])
             ->where(
-                sprintf('(FromIPNumber BETWEEN %1$d AND %2$d) OR (ToIPNumber BETWEEN %1$d AND %2$d) ' .
-                'OR (FromIPNumber < %1$d AND ToIPNumber > %2$d)',
+                sprintf('("CountryIPRange"."FromIPNumber" BETWEEN %1$d AND %2$d) OR ("CountryIPRange"."ToIPNumber" BETWEEN %1$d AND %2$d) ' .
+                'OR ("CountryIPRange"."FromIPNumber" < %1$d AND "CountryIPRange"."ToIPNumber" > %2$d)',
                 $this->FromIPNumber,
                 $this->ToIPNumber)
             );
@@ -177,7 +177,7 @@ class CountryIPRange extends DataObject
             return $default;
         }
 
-        $record = self::get()->where(sprintf('%s BETWEEN FromIPNumber AND ToIPNumber', ip2long($ip)))->first();
+        $record = self::get()->where(sprintf('%s BETWEEN "CountryIPRange"."FromIPNumber" AND "CountryIPRange"."ToIPNumber"', ip2long($ip)))->first();
 
         return $record ? $record->CountryName : $default;
     }
