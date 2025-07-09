@@ -1,1 +1,17 @@
----Name: roadblock_country_extensions---aSmithSummer\Roadblock\Model\RequestLog:  extensions:    - aSmithSummer\RoadblockCountry\Extensions\RequestLogCountryExtensionaSmithSummer\Roadblock\Model\SessionLog:  extensions:    - aSmithSummer\RoadblockCountry\Extensions\SessionLogCountryExtensionaSmithSummer\Roadblock\Model\Rule:  extensions:    - aSmithSummer\RoadblockCountry\Extensions\RuleCountryExtensionaSmithSummer\Roadblock\Model\RuleInspector:  extensions:    - aSmithSummer\RoadblockCountry\Extensions\RuleInspectorCountryExtension---Name: roadblock_country_settings---aSmithSummer\RoadblockCountry\Model\CountryIPRange:  default_country_name: 'Outside New Zealand'
+---
+Name: roadblock_country_extensions
+---
+aSmithSummer\Roadblock\Model\RequestLog:
+  extensions:
+    - aSmithSummer\RoadblockCountry\Extensions\RequestLogCountryExtension
+aSmithSummer\Roadblock\Model\SessionLog:
+  extensions:
+    - aSmithSummer\RoadblockCountry\Extensions\SessionLogCountryExtension
+aSmithSummer\Roadblock\Model\Rule:
+  extensions:
+    - aSmithSummer\RoadblockCountry\Extensions\RuleCountryExtension
+aSmithSummer\Roadblock\Model\RuleInspector:
+  extensions:
+    - aSmithSummer\RoadblockCountry\Extensions\RuleInspectorCountryExtension
+aSmithSummer\RoadblockCountry\Model\CountryIPRange:
+  default_country_name: 'Outside New Zealand'
