@@ -2,6 +2,7 @@
 
 namespace aSmithSummer\RoadblockCountry\Model;
 
+use aSmithSummer\Roadblock\Model\IPRule;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\Security\Permission;
 use SilverStripe\Security\Security;
@@ -23,9 +24,9 @@ class CountryIPRange extends DataObject
 
     private static array $db = [
         'FromIPNumber' => 'BigInt',
-        'FromIPAddress' => 'Varchar(15)',
+        'FromIPAddress' => 'Varchar(45)',
         'ToIPNumber' => 'BigInt',
-        'ToIPAddress' => 'Varchar(15)',
+        'ToIPAddress' => 'Varchar(45)',
         'CountryCode' => 'Varchar(8)',
         'CountryName' => 'Varchar(255)',
     ];
@@ -43,7 +44,7 @@ class CountryIPRange extends DataObject
         $result = parent::validate();
 
         if($this->FromIPAddress) {
-            if (!((int) ip2long($this->FromIPAddress) >= 0)) {
+            if (!((int) IPRule::ipToNumeric($this->FromIPAddress) >= 0)) {
                 $result->addError(_t(__CLASS__ . '.FROM_VALIDATIOM',"From ip address not found."));
             }
         } else {
@@ -51,17 +52,21 @@ class CountryIPRange extends DataObject
         }
 
         if($this->ToIPAddress) {
-            if (!((int) ip2long($this->ToIPAddress) >= 0)) {
+            if (!((int) IPRule::ipToNumeric($this->ToIPAddress) >= 0)) {
                 $result->addError(_t(__CLASS__ . '.TO_VALIDATIOM',"To ip address not found."));
             }
         } else {
             $result->addError(_t(__CLASS__ . '.TO_VALIDATIOM',"To ip address not found."));
         }
 
-        if((int) ip2long($this->ToIPAddress) <= (int) ip2long($this->FromIPAddress)) {
+        if(
+            $this->ToIPAddress
+            && $this->FromIPAddress
+            && (int) IPRule::ipToNumeric($this->ToIPAddress) < (int) IPRule::ipToNumeric($this->FromIPAddress)
+        ) {
             $result->addError(_t(
                 __CLASS__ . '.ORDER_VALIDATIOM',
-                "From ip address must be greater than to ip address."
+                "From ip address must be greater than ip address."
             ));
         }
 
@@ -73,11 +78,11 @@ class CountryIPRange extends DataObject
         parent::onBeforeWrite();
 
         if (!$this->FromIPNumber) {
-            $this->FromIPNumber = (int) ip2long($this->FromIPAddress);
+            $this->FromIPNumber = (int) IPRule::ipToNumeric((string) $this->FromIPAddress);
         }
 
         if (!$this->ToIPNumber) {
-            $this->ToIPNumber = (int) ip2long($this->ToIPAddress);
+            $this->ToIPNumber = (int) IPRule::ipToNumeric($this->ToIPAddress);
         }
     }
 
@@ -104,7 +109,7 @@ class CountryIPRange extends DataObject
                 }
 
                 $record->FromIPNumber = $this->ToIPNumber + 1;
-                $record->FromIPAddress = long2ip($record->FromIPNumber);
+                $record->FromIPAddress = IPRule::numericToIp((string) $record->FromIPNumber);
                 $record->write();
 
                 continue;
@@ -112,7 +117,7 @@ class CountryIPRange extends DataObject
 
             if ($record->ToIPNumber <= $this->FromIPNumber) {
                 $record->ToIPNumber = $this->FromIPNumber - 1;
-                $record->ToIPAddress= long2ip($record->ToIPNumber);
+                $record->ToIPAddress= IPRule::numericToIp((string) $record->ToIPNumber);
                 $record->write();
 
                 continue;
@@ -120,9 +125,9 @@ class CountryIPRange extends DataObject
 
             $record2 = $record->duplicate(false);
             $record->ToIPNumber = $this->FromIPNumber - 1;
-            $record->ToIPAddress= long2ip($record->ToIPNumber);
+            $record->ToIPAddress= numericToIp((string) $record->ToIPNumber);
             $record2->FromIPNumber = $this->ToIPNumber + 1;
-            $record2->FromIPAddress = long2ip($record2->FromIPNumber);
+            $record2->FromIPAddress = IPRule::numericToIp((string) $record2->FromIPNumber);
             $record->write();
             $record2->write();
         }
@@ -131,25 +136,25 @@ class CountryIPRange extends DataObject
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
     public function canCreate($member = null, $context = []): bool
     {
-        return Permission::check('CMS_ACCESS_CountryIPRangeAdmin', 'any');
+        return Permission::check('CountryIPRangeAdmin', 'any', $member);
     }
 
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
     public function canView($member = null): bool
     {
-        return Permission::check('CMS_ACCESS_CountryIPRangeAdmin', 'any');
+        return Permission::check('CountryIPRangeAdmin', 'any', $member);
     }
 
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
     public function canEdit($member = null): bool
     {
-        return Permission::check('CMS_ACCESS_CountryIPRangeAdmin', 'any');
+        return Permission::check('CountryIPRangeAdmin', 'any', $member);
     }
 
     // phpcs:ignore SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint
     public function canDelete($member = null): bool
     {
-        return Permission::check('CMS_ACCESS_CountryIPRangeAdmin', 'any');
+        return Permission::check('CountryIPRangeAdmin', 'any', $member);
     }
 
     public function getExportFields(): array
@@ -177,7 +182,7 @@ class CountryIPRange extends DataObject
             return $default;
         }
 
-        $record = self::get()->where(sprintf('%s BETWEEN "CountryIPRange"."FromIPNumber" AND "CountryIPRange"."ToIPNumber"', ip2long($ip)))->first();
+        $record = self::get()->where(sprintf('%s BETWEEN "CountryIPRange"."FromIPNumber" AND "CountryIPRange"."ToIPNumber"', IPRule::ipToNumeric($ip)))->first();
 
         return $record ? $record->CountryName : $default;
     }

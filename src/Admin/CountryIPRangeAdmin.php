@@ -29,6 +29,6 @@ class CountryIPRangeAdmin extends ModelAdmin
         'ImportForm',
     ];
 
-    private static string $required_permission_codes = 'CMS_ACCESS_CountryIPRangeAdmin';
+    private static string $required_permission_codes = 'CountryIPRangeAdmin';
 
 }
